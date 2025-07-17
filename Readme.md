@@ -102,9 +102,18 @@ kn service list
 
 ```sh
 # create rule
-kubectl create ingress hello-knative --class=nginx --rule="hello.knative.io/*=hello-00001:80"
+kubectl create ingress hello-knative --class=nginx --rule="hello.knative.io/*=hello:80"
 
 # testing
-curl --resolve hello.knative.io:8080:127.0.0.1 http://hello.knative.io:80
+curl --resolve hello.knative.io:8080:127.0.0.1 http://hello.knative.io:8080
 
+# If you want delete the rule
+kubectl delete ingress hello-knative 
+```
+
+### Troubleshooting
+
+```sh
+timeout 1 bash -c '</dev/tcp/localhost/8080 && echo PORT OPEN || echo PORT CLOSED'
+timeout 1 bash -c '</dev/tcp/hello.default.svc.cluster.local/80 && echo PORT OPEN || echo PORT CLOSED'
 ```
